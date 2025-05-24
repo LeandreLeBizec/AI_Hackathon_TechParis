@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --lk-va-bar-width: 72px;
+  --lk-control-bar-height: unset;
+}
+
+.agent-visualizer > .lk-audio-bar {
+  width: 72px;
+}
+
+.lk-agent-control-bar {
+  @apply border-t-0 p-0 h-min mr-4;
+}
+
+.lk-disconnect-button {
+  @apply h-[36px] hover:bg-[#6b221a] hover:text-[white] bg-[#31100c] border-[#6b221a];
+}
+
+/* --- LiveKit Control Bar Windows 7 Style --- */
+.lk-control-bar, .lk-agent-control-bar {
+  background: linear-gradient(180deg, #e3e9f2 0%, #b7c6e2 100%);
+  border-radius: 10px;
+  border: 2px solid #7a8ca7;
+  box-shadow: 0 2px 8px #0002;
+  padding: 0.5rem 1.5rem;
+}
+
+.lk-control-bar button, .lk-agent-control-bar button, .lk-disconnect-button {
+  background: linear-gradient(180deg, #fafdff 0%, #c3d3e7 100%);
+  border: 2px outset #7a8ca7;
+  border-radius: 6px;
+  color: #1a2a44;
+  font-weight: bold;
+  box-shadow: 0 1px 2px #0001;
+  transition: background 0.2s, box-shadow 0.2s;
+  padding: 0.4rem 1.2rem;
+  height: 40px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lk-disconnect-button {
+  background: linear-gradient(180deg, #ffebeb 0%, #f91f31 100%) !important;
+  border: 2px outset #b22222 !important;
+  color: #fff !important;
+}
+
+.lk-disconnect-button:hover {
+  background: linear-gradient(180deg, #f91f31 0%, #b22222 100%) !important;
+  box-shadow: 0 2px 6px #f91f3122;
+  color: #fff !important;
+}
+
+.lk-control-bar button:hover, .lk-agent-control-bar button:hover, .lk-disconnect-button:hover {
+  background: linear-gradient(180deg, #dbeaff 0%, #a7b8d8 100%);
+  box-shadow: 0 2px 6px #0002;
+}
+
+.lk-control-bar svg, .lk-agent-control-bar svg {
+  filter: grayscale(0.7) drop-shadow(0 1px 0 #fff);
+}
+
+.lk-device-menu, .lk-media-device-menu {
+  background: #fafdff;
+  border: 2px solid #7a8ca7;
+  border-radius: 6px;
+  color: #1a2a44;
+  font-weight: bold;
+  box-shadow: 0 2px 8px #0002;
+}
+
+.lk-device-menu::after, .lk-media-device-menu::after {
+  content: '';
+  display: inline-block;
+  margin-left: 0.5em;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #7a8ca7;
+  vertical-align: middle;
+}
+
+/* --- Fin Windows 7 LiveKit --- */
