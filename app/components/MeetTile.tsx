@@ -17,7 +17,7 @@ export default function MeetTile({ trackRef, userAvatar, userName, participant, 
   // Fallback avatar si pas de vidéo : même style
   return (
     <div className={tileStyle}>
-      <Image src={`/assets/img/avatars/${userAvatar}`} alt="Avatar" className="w-24 h-24 rounded-full border-2 border-[#a6c1e4] shadow mb-4" />
+      <Image src={`/assets/img/avatars/${userAvatar}`} alt="Avatar" width={96} height={96} className="w-24 h-24 rounded-full border-2 border-[#a6c1e4] shadow mb-4" />
       <div className="text-xl font-bold text-blue-900 mb-1">{participant?.name || userName}</div>
     </div>
   );

@@ -3,28 +3,68 @@ import MeetGrid from "@/app/components/MeetGrid";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function MeetRoom({ userName, userAvatar, token, serverUrl, reset }: { userName: string, userAvatar: string, token: string, serverUrl: string, reset: () => void }) {
+type MeetRoomProps = {
+  userName: string;
+  userAvatar: string;
+  token: string;
+  serverUrl: string;
+  reset: () => void;
+  selectedCamera: string;
+  selectedMic: string;
+  selectedSpeaker: string;
+  devices: { cameras: MediaDeviceInfo[]; mics: MediaDeviceInfo[]; speakers: MediaDeviceInfo[] };
+};
+
+export default function MeetRoom({ userName, userAvatar, token, serverUrl, reset, selectedCamera, selectedMic, selectedSpeaker }: MeetRoomProps) {
   return (
     <LiveKitRoom serverUrl={serverUrl} token={token} connect={true}>
-      <MeetRoomInner userName={userName} userAvatar={userAvatar} reset={reset} />
+      <MeetRoomInner userName={userName} userAvatar={userAvatar} reset={reset} selectedCamera={selectedCamera} selectedMic={selectedMic} selectedSpeaker={selectedSpeaker} />
     </LiveKitRoom>
   );
 }
 
-function MeetRoomInner({ userName, userAvatar, reset }: { userName: string, userAvatar: string, reset: () => void }) {
+function MeetRoomInner({ userName, userAvatar, reset, selectedCamera, selectedMic, selectedSpeaker }: { userName: string, userAvatar: string, reset: () => void, selectedCamera: string, selectedMic: string, selectedSpeaker: string }) {
   const room = useRoomContext();
   const [showChat, setShowChat] = useState(false);
+  const [cameraEnabled, setCameraEnabled] = useState(true);
 
   useEffect(() => {
     if (!room) return;
+    // Sync camera state on mount
+    setCameraEnabled(room.localParticipant.isCameraEnabled);
     const handleDisconnect = () => {
       reset();
     };
     room.on("disconnected", handleDisconnect);
+    // Camera
+    if (selectedCamera) {
+      room.localParticipant.setCameraEnabled(true, { deviceId: selectedCamera });
+      setCameraEnabled(true);
+    }
+    // Micro
+    if (selectedMic) {
+      room.localParticipant.setMicrophoneEnabled(true, { deviceId: selectedMic });
+    }
     return () => {
       room.off("disconnected", handleDisconnect);
     };
-  }, [room, reset]);
+  }, [room, reset, selectedCamera, selectedMic, selectedSpeaker]);
+
+  // Toggle camera handler
+  const handleToggleCamera = () => {
+    if (!room) return;
+    const newState = !cameraEnabled;
+    room.localParticipant.setCameraEnabled(newState);
+    setCameraEnabled(newState);
+  };
+
+  // Change audio output device when selectedSpeaker changes
+  useEffect(() => {
+    const audioEl = document.querySelector('audio');
+    if (audioEl && selectedSpeaker && typeof audioEl.setSinkId === 'function') {
+      audioEl.setSinkId(selectedSpeaker).catch(() => {});
+    }
+  }, [selectedSpeaker]);
 
   return (
     <main className="h-screen w-full flex flex-col bg-[#3a6ea5] bg-[url('/assets/img/bg.jpg')] bg-cover text-white font-sans relative overflow-hidden">
@@ -58,6 +98,17 @@ function MeetRoomInner({ userName, userAvatar, reset }: { userName: string, user
       </div>
       <div className="w-full flex-shrink-0 flex justify-center">
         <div className="aaa flex items-center gap-3 justify-center">
+          <button
+            className="font-bold focus:outline-none camera-button"
+            onClick={handleToggleCamera}
+            aria-label={cameraEnabled ? "Désactiver la caméra" : "Activer la caméra"}
+          >
+            {cameraEnabled ? (
+              <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M17 10.5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4Z" stroke="#1a2a44" strokeWidth="2" strokeLinejoin="round"/></svg>
+            ) : (
+              <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M17 10.5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4ZM3 3l18 18" stroke="#1a2a44" strokeWidth="2" strokeLinejoin="round"/></svg>
+            )}
+          </button>
           <VoiceAssistantControlBar />
           <button
             className="font-bold focus:outline-none mr-4"

@@ -30,7 +30,11 @@
 }
 
 .lk-agent-control-bar{
-  padding-right: 0rem;
+  padding: 0.5rem 0rem;
+}
+
+.camera-button{
+  margin-left: 0.5rem;
 }
 
 .lk-control-bar button, .aaa button, .lk-disconnect-button {
