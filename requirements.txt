@@ -3,4 +3,7 @@ livekit-api
 livekit-agents
 livekit-plugins-bey
 livekit-plugins-google
-requests 
+requests
+aiohttp
+fastapi
+uvicorn 
