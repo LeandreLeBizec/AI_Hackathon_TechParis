@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  evaluator:
+    build: .
+    environment:
+      - EVALUATOR_CONFIG=/app/config.yaml
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    ports:
+      - "8000:8000"

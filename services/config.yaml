@@ -1,0 +1,8 @@
+confidence_threshold: 0.75
+candidate_profile:
+  name: "Jane Doe"
+  role: "Backend Engineer"
+  experience_years: 5
+cv_summary: |
+  Experienced Python and Go developer with expertise in microservices, distributed
+  systems, and cloud-native architectures.
