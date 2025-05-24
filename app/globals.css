@@ -11,8 +11,8 @@
   width: 72px;
 }
 
-.lk-agent-control-bar {
-  @apply border-t-0 p-0 h-min mr-4;
+.aaa {
+  @apply border-t-0 p-0 mr-4;
 }
 
 .lk-disconnect-button {
@@ -20,15 +20,20 @@
 }
 
 /* --- LiveKit Control Bar Windows 7 Style --- */
-.lk-control-bar, .lk-agent-control-bar {
+.lk-control-bar, .aaa {
   background: linear-gradient(180deg, #e3e9f2 0%, #b7c6e2 100%);
   border-radius: 10px;
   border: 2px solid #7a8ca7;
   box-shadow: 0 2px 8px #0002;
-  padding: 0.5rem 1.5rem;
+  padding: 0;
+  margin-bottom: 0.5rem;
 }
 
-.lk-control-bar button, .lk-agent-control-bar button, .lk-disconnect-button {
+.lk-agent-control-bar{
+  padding-right: 0rem;
+}
+
+.lk-control-bar button, .aaa button, .lk-disconnect-button {
   background: linear-gradient(180deg, #fafdff 0%, #c3d3e7 100%);
   border: 2px outset #7a8ca7;
   border-radius: 6px;
@@ -56,12 +61,12 @@
   color: #fff !important;
 }
 
-.lk-control-bar button:hover, .lk-agent-control-bar button:hover, .lk-disconnect-button:hover {
+.lk-control-bar button:hover, .aaa button:hover, .lk-disconnect-button:hover {
   background: linear-gradient(180deg, #dbeaff 0%, #a7b8d8 100%);
   box-shadow: 0 2px 6px #0002;
 }
 
-.lk-control-bar svg, .lk-agent-control-bar svg {
+.lk-control-bar svg, .aaa svg {
   filter: grayscale(0.7) drop-shadow(0 1px 0 #fff);
 }
 
