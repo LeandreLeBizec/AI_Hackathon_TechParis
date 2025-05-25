@@ -1,0 +1,11 @@
+dotenv
+livekit-api
+livekit-agents
+livekit-plugins-bey
+livekit-plugins-google
+requests
+aiohttp
+fastapi
+uvicorn
+watchdog
+pyairtable 

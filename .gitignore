@@ -1,6 +1,9 @@
 .env
 .venv
+*venv
 
+live-coding/node_modules
+live-coding/logs/*
 
 data/
 output/
@@ -8,4 +11,4 @@ output/
 __pycache__/
 *.ipynb
 
-
+.DS_Store
