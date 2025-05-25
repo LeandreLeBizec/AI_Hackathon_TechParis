@@ -1,0 +1,12 @@
+{
+  "name": "live-coding-python",
+  "version": "1.0.0",
+  "description": "Un éditeur de code Python en ligne",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+} 
