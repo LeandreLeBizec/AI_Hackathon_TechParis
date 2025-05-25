@@ -38,7 +38,7 @@ async def entrypoint(ctx: JobContext):
         writer = await ctx.room.local_participant.stream_text(  
             topic="lk.chat"  
         )  
-        await writer.write("here is the link to the live coding website : http://localhost:5173/")  
+        await writer.write("here is the link to the live coding website : http://localhost:3000/")  
         await writer.aclose()  
     except Exception as e:  
         logger.error(f"Erreur lors de l'envoi du message dans le chat: {e}")

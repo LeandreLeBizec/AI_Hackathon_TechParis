@@ -6,4 +6,4 @@ livekit-plugins-google
 requests
 aiohttp
 fastapi
-uvicorn 
+uvicorn

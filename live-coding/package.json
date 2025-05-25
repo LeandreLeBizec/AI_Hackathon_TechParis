@@ -1,12 +1,13 @@
 {
-  "name": "live-coding-python",
+  "name": "live-coding",
   "version": "1.0.0",
-  "description": "Un éditeur de code Python en ligne",
+  "description": "Application de live coding avec envoi de logs à l'agent",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "axios": "^1.6.7"
   }
-} 
+}
