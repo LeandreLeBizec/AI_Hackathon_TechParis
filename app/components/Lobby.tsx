@@ -25,7 +25,7 @@ export default function Lobby({ onJoin }: LobbyProps) {
       setMediaError("");
       setVideoStep(true);
     } catch {
-      setMediaError("Merci d'autoriser l'accès au micro.");
+      setMediaError("Please allow access to the microphone.");
     }
   };
   const requestVideo = async () => {
@@ -34,7 +34,7 @@ export default function Lobby({ onJoin }: LobbyProps) {
       setVideoGranted(true);
       setMediaError("");
     } catch {
-      setMediaError("Aucune caméra détectée ou accès refusé. Vous pouvez continuer avec le micro uniquement.");
+      setMediaError("No camera detected or access denied.");
       setVideoGranted(false);
     }
   };
