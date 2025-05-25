@@ -49,13 +49,13 @@ export default function Lobby({ onJoin }: LobbyProps) {
   };
   if (!audioGranted && !audioSkipped) {
     return (
-      <main className="h-screen w-full flex flex-col justify-center items-center bg-[#3a6ea5] bg-[url('/assets/img/bg.jpg')] bg-cover text-white font-sans">
+      <main className="h-screen w-full flex flex-col justify-center items-center bg-[#3a6ea5] bg-[url('/assets/img/meet7.png')] bg-cover text-white font-sans">
         <div className="bg-[#f2f2f2] rounded-xl border-4 border-[#a6c1e4] shadow-xl w-96 p-6 text-center text-black flex flex-col items-center justify-center">
           <Image src={`/assets/img/avatars/${selectedAvatar}`} alt="Avatar" width={96} height={96} className="w-24 h-24 mx-auto rounded-lg border-2 border-white shadow mb-4" />
-          <h1 className="text-xl font-bold mb-2">Bienvenue sur Meet 7</h1>
-          <p className="text-gray-600 mb-4">Pour continuer, merci d&#39;autoriser l&#39;accès au micro.</p>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded font-bold hover:bg-blue-700 transition mb-2" onClick={requestAudio}>Autoriser le micro</button>
-          <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded font-bold hover:bg-gray-400 transition" onClick={() => { setAudioSkipped(true); setVideoStep(true); }}>Continuer sans micro</button>
+          <h1 className="text-xl font-bold mb-2">Welcome to Meet 7</h1>
+          <p className="text-gray-600 mb-4">For continue, please allow access to the microphone.</p>
+          <button className="px-4 py-2 bg-blue-600 text-white rounded font-bold hover:bg-blue-700 transition mb-2" onClick={requestAudio}>Allow microphone</button>
+          <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded font-bold hover:bg-gray-400 transition" onClick={() => { setAudioSkipped(true); setVideoStep(true); }}>Continue without microphone</button>
           {mediaError && <div className="text-red-600 mt-2">{mediaError}</div>}
         </div>
       </main>
@@ -63,20 +63,20 @@ export default function Lobby({ onJoin }: LobbyProps) {
   }
   if ((audioGranted || audioSkipped) && !videoGranted && !videoSkipped && videoStep) {
     return (
-      <main className="h-screen w-full flex flex-col justify-center items-center bg-[#3a6ea5] bg-[url('/assets/img/bg.jpg')] bg-cover text-white font-sans">
+      <main className="h-screen w-full flex flex-col justify-center items-center bg-[#3a6ea5] bg-[url('/assets/img/meet7.png')] bg-cover text-white font-sans">
         <div className="bg-[#f2f2f2] rounded-xl border-4 border-[#a6c1e4] shadow-xl w-96 p-6 text-center text-black flex flex-col items-center justify-center">
           <Image src={`/assets/img/avatars/${selectedAvatar}`} alt="Avatar" width={96} height={96} className="w-24 h-24 mx-auto rounded-lg border-2 border-white shadow mb-4" />
           <h1 className="text-xl font-bold mb-2">Caméra (optionnel)</h1>
-          <p className="text-gray-600 mb-4">Autorisez l&#39;accès à la caméra pour la vidéo, ou continuez avec le micro uniquement.</p>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded font-bold hover:bg-blue-700 transition mb-2" onClick={requestVideo}>Autoriser la caméra</button>
-          <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded font-bold hover:bg-gray-400 transition" onClick={() => setVideoSkipped(true)}>Continuer sans caméra</button>
+          <p className="text-gray-600 mb-4">Allow access to the camera for video, or continue with the microphone only.</p>
+          <button className="px-4 py-2 bg-blue-600 text-white rounded font-bold hover:bg-blue-700 transition mb-2" onClick={requestVideo}>Allow camera</button>
+          <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded font-bold hover:bg-gray-400 transition" onClick={() => setVideoSkipped(true)}>Continue without camera</button>
           {mediaError && <div className="text-red-600 mt-2">{mediaError}</div>}
         </div>
       </main>
     );
   }
   return (
-    <main className="h-screen w-full flex flex-col justify-center items-center bg-[#3a6ea5] bg-[url('/assets/img/bg.jpg')] bg-cover text-white font-sans">
+    <main className="h-screen w-full flex flex-col justify-center items-center bg-[#3a6ea5] bg-[url('/assets/img/meet7.png')] bg-cover text-white font-sans">
       <div className="bg-[#f2f2f2] rounded-xl border-4 border-[#a6c1e4] shadow-xl w-96 p-6 text-center text-black">
         <Image src={`/assets/img/avatars/${selectedAvatar}`} alt="Avatar" width={96} height={96} className="w-24 h-24 mx-auto rounded-lg border-2 border-white shadow mb-2" />
         <div className="mb-4">

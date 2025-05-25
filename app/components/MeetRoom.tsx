@@ -67,7 +67,7 @@ function MeetRoomInner({ userName, userAvatar, reset, selectedCamera, selectedMi
   }, [selectedSpeaker]);
 
   return (
-    <main className="h-screen w-full flex flex-col bg-[#3a6ea5] bg-[url('/assets/img/bg.jpg')] bg-cover text-white font-sans relative overflow-hidden">
+    <main className="h-screen w-full flex flex-col bg-[#3a6ea5] bg-[url('/assets/img/meet7.png')] bg-cover text-white font-sans relative overflow-hidden">
       <div className="flex-1 flex flex-col min-h-0 p-0">
         <div className={`flex flex-row h-full w-full transition-all duration-300 ${showChat ? "pr-0" : "pr-0"}`}>
           <div className={`flex-1 transition-all duration-300 ${showChat ? "mr-0" : ""}`}>

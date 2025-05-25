@@ -8,7 +8,7 @@ export default function MeetTile({ trackRef, userAvatar, userName, participant, 
   if (trackRef) {
     return (
       <div className={tileStyle}>
-        <div className="w-full h-full p-4 flex items-center justify-center overflow-hidden rounded-2xl">
+        <div className="w-full h-full p-1 flex items-center justify-center overflow-hidden rounded-2xl">
           <ParticipantTile trackRef={trackRef} className="w-full h-full object-cover !rounded-2xl" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '1rem' }} />
         </div>
       </div>
