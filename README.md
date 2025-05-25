@@ -1,16 +1,37 @@
-# CV Analysis API
+# 🤖 AI HR Automatic Interview Platform
 
-A FastAPI backend for analyzing CVs against company requirements using AI-powered screening.
+> **Revolutionizing recruitment with AI-powered candidate assessment and nostalgic Windows 7 UI**
 
-## Features
+An intelligent HR platform that automates the interview process by analyzing candidate resumes against company profiles, generating comprehensive assessments, and providing interactive dashboards for hiring decisions.
 
-- **CV Analysis**: Upload PDF CVs and get comprehensive analysis against company requirements
-- **Screening Tests**: AI-generated fit scores and recommendations
-- **Company Values Questions**: Behavioral interview questions based on company values
-- **Company Descriptions**: AI-generated company descriptions for context
-- **Technical Gap Analysis**: Identify potential skill gaps and hiring risks
-- **Technical Interview Questions**: Generate global, specific, and use-case technical questions
-- **Multi-company Support**: Analyze against different companies
+## ✨ Features
+
+### 🎯 **Smart Resume Analysis**
+- **Automated CV Parsing**: Extract and analyze candidate information from resumes
+- **Company Alignment**: Match candidates against company values, culture, and job requirements
+- **Intelligent Scoring**: Generate comprehensive scores across multiple dimensions:
+  - Technical Skills Assessment (1-5 scale)
+  - Experience Level Evaluation
+  - Industry Relevance Matching
+  - Culture Alignment Analysis
+  - Overall Fit Score
+
+### 📊 **Interactive Dashboard**
+- **Real-time Analytics**: Track candidate performance and hiring metrics
+- **Airtable Integration**: Seamless data synchronization for team collaboration
+- **Decision Support**: Priority levels, risk assessment, and hiring recommendations
+- **Aggregated Insights**: Company-wide statistics and trends
+
+### 🎨 **Nostalgic Frontend Experience**
+- **Windows 7 Inspired UI**: Unique, nostalgic interface built with Next.js
+- **Responsive Design**: Modern functionality with retro aesthetics
+- **Intuitive Navigation**: Familiar Windows-style interface for enhanced user experience
+
+### 🔧 **Advanced Backend Processing**
+- **Python Integration**: Embedded Python interpreter for complex data processing
+- **Multi-source Data**: Company values, about pages, and job descriptions analysis
+- **JSON API**: RESTful endpoints for seamless frontend-backend communication
+- **File-based Storage**: Simple, persistent data storage without database complexity
 
 ## API Endpoints
 
@@ -297,3 +318,80 @@ The API includes comprehensive error handling:
 4. **Monitoring**: Add logging and monitoring
 5. **File Storage**: Consider cloud storage for uploaded files
 6. **Database**: Add database for storing analysis results
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.6+
+- Node.js 16+
+- npm or yarn
+
+### Backend Setup
+```bash
+# Clone the repository
+git clone https://github.com/LeandreLeBizec/AI_Hackathon_TechParis.git
+cd AI_Hackathon_TechParis
+
+# Navigate to backend
+cd back/api
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Set up environment variables
+# Add your API keys (GOOGLE_API_KEY, BEY_AVATAR_ID)
+
+# Run the backend
+python upload_cv.py
+```
+
+### Frontend Setup
+```bash
+# Navigate to frontend directory (when available)
+cd front
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Next.js UI   │◄──►│   Python API     │◄──►│   Airtable      │
+│  (Windows 7)    │    │   (FastAPI)      │    │   Dashboard     │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+                              │
+                              ▼
+                       ┌──────────────────┐
+                       │  Data Processing │
+                       │  • CV Parser     │
+                       │  • Company Data  │
+                       │  • AI Analysis   │
+                       └──────────────────┘
+```
+
+## 📁 Project Structure
+
+```
+├── back/
+│   └── api/               # Backend API
+│       ├── upload_cv.py   # Main application entry point
+│       ├── src/
+│       │   ├── cv_reader/ # Resume parsing and analysis
+│       │   └── git_hub_reader/ # Company data extraction
+│       ├── data/
+│       │   ├── companies/ # Company profiles and job data
+│       │   └── candidate_results/ # Analysis results storage
+│       ├── transcripts/   # Interview transcripts
+│       └── output/       # Generated reports and analysis
+├── front/                # Next.js Windows 7 UI (coming soon)
+└── README.md            # This file
+```
+
+---
+
+**Built with ❤️ for the future of HR technology**
