@@ -26,7 +26,7 @@ export default function MeetRoom({ userName, userAvatar, token, serverUrl, reset
 function MeetRoomInner({ userName, userAvatar, reset, selectedCamera, selectedMic, selectedSpeaker }: { userName: string, userAvatar: string, reset: () => void, selectedCamera: string, selectedMic: string, selectedSpeaker: string }) {
   const room = useRoomContext();
   const [cameraEnabled, setCameraEnabled] = useState(true);
-  const [showChat, setShowChat] = useState(true);
+  const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
     if (!room) return;
@@ -121,13 +121,16 @@ function MeetRoomInner({ userName, userAvatar, reset, selectedCamera, selectedMi
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 400, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="h-full w-[400px] max-w-full bg-white/95 border-l-4 border-[#3a6ea5] shadow-2xl z-40 flex flex-col p-0 m-0"
+            className="h-full w-[400px] max-w-full bg-[#e3e9f2] border-l-4 border-[#7a8ca7] shadow-2xl z-40 flex flex-col p-0 m-0 rounded-l-xl overflow-hidden"
+            style={{ boxShadow: '0 4px 24px #0003', borderLeft: '4px solid #7a8ca7' }}
           >
-            <div className="flex items-center justify-between p-4 border-b border-[#a6c1e4] bg-gradient-to-b from-[#e3e9f2] to-[#b7c6e2]">
-              <span className="font-bold text-blue-900 text-lg">Chat</span>
-              <button onClick={() => setShowChat(false)} className="text-blue-900 text-2xl font-bold hover:text-red-500">×</button>
+            {/* Header style Windows 7 */}
+            <div className="flex items-center justify-between p-3 border-b-2 border-[#b7c6e2] bg-gradient-to-b from-[#fafdff] to-[#b7c6e2] shadow-sm">
+              <span className="font-bold text-blue-900 text-lg drop-shadow-sm">💬 Chat</span>
+              <button onClick={() => setShowChat(false)} className="text-blue-900 text-2xl font-bold hover:text-red-500 px-2 rounded transition-all border-2 border-transparent hover:border-[#b7c6e2] bg-gradient-to-b from-[#fafdff] to-[#c3d3e7]">×</button>
             </div>
-            <div className="flex-1 overflow-y-auto">
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto flex flex-col" style={{justifyContent:'flex-start'}}>
               <Chat />
             </div>
           </motion.div>
