@@ -12,7 +12,7 @@ Clone the repository and install dependencies:
 pnpm i
 ```
 
-Set up the environment by copying `.env.example` to `.env.local` and filling in the required values:
+Set up the environment by copying `.env.example` to `.env` and filling in the required values:
 
 - `LIVEKIT_URL`
 - `LIVEKIT_API_KEY`
