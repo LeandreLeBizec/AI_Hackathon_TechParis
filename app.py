@@ -1,6 +1,8 @@
 import logging
 import os
 import json
+import subprocess
+import asyncio
 
 from dotenv import load_dotenv
 
@@ -30,7 +32,6 @@ def read_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         return json.load(file)
 
-
 async def entrypoint(ctx: JobContext):
     instructions = read_instructions('Instructions.txt')
     json_data = read_json('response_1748098463317.json')
@@ -53,11 +54,17 @@ async def entrypoint(ctx: JobContext):
     bey_avatar = bey.AvatarSession(avatar_id=avatar_id)
     await bey_avatar.start(session, room=ctx.room)
 
+    # Run Airtable_API.py concurrently
+    asyncio.create_task(run_airtable_api())
+
     await session.start(
         agent=Agent(instructions=f"Your instructions are: {instructions}, the candidate informations are: {json_data}"),
         room=ctx.room,
-        room_output_options=RoomOutputOptions(audio_enabled=True),
+        room_output_options=RoomOutputOptions(audio_enabled=True,),
     )
+
+async def run_airtable_api():
+    subprocess.run(["python", "Airtable_API.py"])
 
 
 if __name__ == "__main__":
