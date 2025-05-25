@@ -33,7 +33,7 @@ def read_json(file_path):
 
 async def entrypoint(ctx: JobContext):
     instructions = read_instructions('Instructions.txt')
-    json_data = read_json('response_1748098463317 (1) (1).json')
+    json_data = read_json('response_1748098463317.json')
     await ctx.connect()
 
     # Use json_data as needed, for example:
