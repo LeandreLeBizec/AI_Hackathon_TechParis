@@ -40,24 +40,23 @@ class LogHandler(FileSystemEventHandler):
         self.session = session
         self.last_processed = {}
         self.event_queue = queue.Queue()
+        self.processing_files = set()  # Pour suivre les fichiers en cours de traitement
         logger.info("LogHandler initialisé")
 
     def on_created(self, event):
         if not event.is_directory and event.src_path.endswith('.json'):
-            self.event_queue.put(event.src_path)
+            self.event_queue.put(('created', event.src_path))
 
     def on_modified(self, event):
         if not event.is_directory and event.src_path.endswith('.json'):
-            self.event_queue.put(event.src_path)
+            self.event_queue.put(('modified', event.src_path))
 
     async def process_new_log(self, log_path):
         # Éviter de traiter plusieurs fois le même fichier
-        if log_path in self.last_processed:
-            if time.time() - self.last_processed[log_path] < 1:
-                return
-        
-        self.last_processed[log_path] = time.time()
-        
+        if log_path in self.processing_files:
+            return
+            
+        self.processing_files.add(log_path)
         try:
             with open(log_path, 'r') as f:
                 log_content = json.loads(f.read())
@@ -87,13 +86,17 @@ class LogHandler(FileSystemEventHandler):
             logger.error(f"Erreur de décodage JSON pour le log {log_path}: {e}")
         except Exception as e:
             logger.error(f"Erreur lors du traitement du log {log_path}: {e}")
+        finally:
+            self.processing_files.remove(log_path)
 
 async def process_event_queue(handler):
     while True:
         try:
             if not handler.event_queue.empty():
-                log_path = handler.event_queue.get_nowait()
-                await handler.process_new_log(log_path)
+                event_type, log_path = handler.event_queue.get_nowait()
+                # Ne traiter que les événements 'created' pour éviter les doublons
+                if event_type == 'created':
+                    await handler.process_new_log(log_path)
             await asyncio.sleep(0.1)
         except Exception as e:
             logger.error(f"Erreur lors du traitement de la queue : {e}")
