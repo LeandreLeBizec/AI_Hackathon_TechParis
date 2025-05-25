@@ -1,0 +1,8 @@
+{
+  "timestamp": "2025-05-25T10:48:38.002Z",
+  "code": "for i in range(5):\n    print(\"Hello, World!\")",
+  "output": "Hello, World!\nHello, World!\nHello, World!\nHello, World!\nHello, World!\n",
+  "error": "",
+  "language": "python",
+  "user": "leandrelebizec@gmail.com"
+}

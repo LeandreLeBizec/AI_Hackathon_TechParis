@@ -1,12 +1,12 @@
 import logging
-import os
 import asyncio
 import json
-import time
+import os
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from pathlib import Path
 import queue
+import subprocess
 
 from dotenv import load_dotenv
 
@@ -25,6 +25,15 @@ logger = logging.getLogger("bey-avatar-example")
 logger.setLevel(logging.INFO)
 
 load_dotenv()  # GOOGLE_API_KEY is in .env
+
+def read_instructions(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return file.read()
+
+
+def read_json(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return json.load(file)
 
 #async def send_weather_message(ctx):
 #    await asyncio.sleep(5)  # Attendre 5 secondes
@@ -52,7 +61,6 @@ class LogHandler(FileSystemEventHandler):
             self.event_queue.put(('modified', event.src_path))
 
     async def process_new_log(self, log_path):
-        # Éviter de traiter plusieurs fois le même fichier
         if log_path in self.processing_files:
             return
             
@@ -63,7 +71,11 @@ class LogHandler(FileSystemEventHandler):
                 logger.info("\n=== NOUVEAU LOG DÉTECTÉ ===")
                 logger.info(f"Fichier : {log_path}")
                 logger.info(f"Timestamp : {log_content.get('timestamp', 'N/A')}")
-                logger.info(f"Utilisateur : {log_content.get('user', 'N/A')}")
+                # Masquer l'email de l'utilisateur
+                user = log_content.get('user', 'N/A')
+                if '@' in user:
+                    user = user.split('@')[0] + '@***'
+                logger.info(f"Utilisateur : {user}")
                 logger.info(f"Langage : {log_content.get('language', 'N/A')}")
                 logger.info("\nCode exécuté :")
                 logger.info(f"```{log_content.get('language', '')}\n{log_content.get('code', '')}\n```")
@@ -78,9 +90,9 @@ class LogHandler(FileSystemEventHandler):
                 
                 logger.info("========================")
                 
-                # Envoyer le contenu du log à l'agent
+                # Envoyer le contenu du log à l'agent sans l'email
                 await self.session.generate_reply(
-                    user_input=f"This is the solution of the exercise you gave me, can you comment it ? {log_content.get('user')} en {log_content.get('language')}:\n{log_content.get('code')}\n\nSortie:\n{log_content.get('output')}\n\nErreur:\n{log_content.get('error')}"
+                    user_input=f"This is the solution of the exercise you gave me, can you comment it ? Code en {log_content.get('language')}:\n{log_content.get('code')}\n\nSortie:\n{log_content.get('output')}\n\nErreur:\n{log_content.get('error')}"
                 )
         except json.JSONDecodeError as e:
             logger.error(f"Erreur de décodage JSON pour le log {log_path}: {e}")
@@ -123,7 +135,14 @@ async def start_log_monitoring(session):
     return observer
 
 async def entrypoint(ctx: JobContext):
+    base_dir = Path(__file__).parent
+    instructions = read_instructions(str(base_dir / 'Instructions.txt'))
+    json_data = read_json(str(base_dir / 'response_1748098463317.json'))
+    
     await ctx.connect()
+
+    candidate_name = json_data['candidate_analysis']['basic_info']['candidate_name']
+    logger.info(f"Interviewing candidate: {candidate_name}")
 
     # Envoyer le message texte dans le chat
     try:  
@@ -145,24 +164,25 @@ async def entrypoint(ctx: JobContext):
         ),
     )
 
-    #avatar_id = os.getenv("BEY_AVATAR_ID")
-    #bey_avatar = bey.AvatarSession(avatar_id=avatar_id)
-    #await bey_avatar.start(session, room=ctx.room)
+    avatar_id = os.getenv("BEY_AVATAR_ID")
+    bey_avatar = bey.AvatarSession(avatar_id=avatar_id)
+    await bey_avatar.start(session, room=ctx.room)
+
+    # Run Airtable_API.py concurrently
+    asyncio.create_task(run_airtable_api())
 
     await session.start(
-        agent=Agent(instructions="Vous êtes un assistant vocal amical qui peut parler de la météo et analyser les logs de coding."),
+        agent=Agent(instructions=f"Your instructions are: {instructions}, the candidate informations are: {json_data}"),
         room=ctx.room,
         room_output_options=RoomOutputOptions(audio_enabled=True),
     )
+
 
     # Démarrer la surveillance des logs
     observer = await start_log_monitoring(session)
     if observer is None:
         logger.error("Impossible de démarrer la surveillance des logs")
         return
-
-    # Lancer l'envoi du message météo après 5 secondes
-    asyncio.create_task(send_weather_message(ctx))
 
     try:
         while True:
@@ -172,6 +192,9 @@ async def entrypoint(ctx: JobContext):
             observer.stop()
             observer.join()
             logger.info("Surveillance des logs arrêtée")
+
+async def run_airtable_api():
+    subprocess.run(["python", "Airtable_API.py"])
 
 if __name__ == "__main__":
     cli.run_app(
