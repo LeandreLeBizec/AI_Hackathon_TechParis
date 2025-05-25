@@ -25,8 +25,8 @@ export default function MeetRoom({ userName, userAvatar, token, serverUrl, reset
 
 function MeetRoomInner({ userName, userAvatar, reset, selectedCamera, selectedMic, selectedSpeaker }: { userName: string, userAvatar: string, reset: () => void, selectedCamera: string, selectedMic: string, selectedSpeaker: string }) {
   const room = useRoomContext();
-  const [showChat, setShowChat] = useState(false);
   const [cameraEnabled, setCameraEnabled] = useState(true);
+  const [showChat, setShowChat] = useState(true);
 
   useEffect(() => {
     if (!room) return;
@@ -66,59 +66,73 @@ function MeetRoomInner({ userName, userAvatar, reset, selectedCamera, selectedMi
     }
   }, [selectedSpeaker]);
 
+  // Hauteur fixe pour la barre de contrôle
+  const CONTROL_BAR_HEIGHT = 72;
+
   return (
-    <main className="h-screen w-full flex flex-col bg-[#3a6ea5] bg-[url('/assets/img/meet7.png')] bg-cover text-white font-sans relative overflow-hidden">
-      <div className="flex-1 flex flex-col min-h-0 p-0">
-        <div className={`flex flex-row h-full w-full transition-all duration-300 ${showChat ? "pr-0" : "pr-0"}`}>
-          <div className={`flex-1 transition-all duration-300 ${showChat ? "mr-0" : ""}`}>
+    <main className="h-screen w-full flex flex-row bg-[#3a6ea5] bg-[url('/assets/img/meet7.png')] bg-cover text-white font-sans relative overflow-hidden">
+      {/* Colonne gauche : grille + barre */}
+      <div className={`flex flex-col h-full flex-1 min-w-0 transition-all duration-300 ${showChat ? '' : ''}`}>
+        {/* Grille vidéo qui prend tout l'espace restant au-dessus de la barre */}
+        <div className="flex-1 min-h-0 flex flex-col">
+          <div className="flex-1 min-h-0">
             <MeetGrid userAvatar={userAvatar} userName={userName} />
             <RoomAudioRenderer />
           </div>
-          <AnimatePresence>
-            {showChat && (
-              <motion.div
-                initial={{ x: 400, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 400, opacity: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="h-full w-[400px] max-w-full bg-white/95 border-l-4 border-[#3a6ea5] shadow-2xl z-40 flex flex-col p-0 m-0"
-                style={{margin:0, padding:0}}
-              >
-                <div className="flex items-center justify-between p-4 border-b border-[#a6c1e4] bg-gradient-to-b from-[#e3e9f2] to-[#b7c6e2]">
-                  <span className="font-bold text-blue-900 text-lg">Chat</span>
-                  <button onClick={() => setShowChat(false)} className="text-blue-900 text-2xl font-bold hover:text-red-500">×</button>
-                </div>
-                <div className="flex-1 overflow-y-auto">
-                  <Chat />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
+        {/* Barre de contrôle en bas, hauteur fixe avec animation */}
+        <motion.div
+          style={{ height: CONTROL_BAR_HEIGHT }}
+          className="w-full flex-shrink-0 flex justify-center items-center"
+          animate={{
+            x: showChat ? 0 : 0 // On pourrait ajuster si besoin, mais la barre reste centrée
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        >
+          <div className="aaa flex items-center gap-3 justify-center">
+            <button
+              className="font-bold focus:outline-none camera-button"
+              onClick={handleToggleCamera}
+              aria-label={cameraEnabled ? "Désactiver la caméra" : "Activer la caméra"}
+            >
+              {cameraEnabled ? (
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M17 10.5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4Z" stroke="#1a2a44" strokeWidth="2" strokeLinejoin="round"/></svg>
+              ) : (
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M17 10.5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4ZM3 3l18 18" stroke="#1a2a44" strokeWidth="2" strokeLinejoin="round"/></svg>
+              )}
+            </button>
+            <VoiceAssistantControlBar />
+            <button
+              className="font-bold focus:outline-none mr-2"
+              onClick={() => setShowChat((v) => !v)}
+              aria-label={showChat ? "Masquer le chat" : "Afficher le chat"}
+            >
+              💬
+            </button>
+          </div>
+        </motion.div>
       </div>
-      <div className="w-full flex-shrink-0 flex justify-center">
-        <div className="aaa flex items-center gap-3 justify-center">
-          <button
-            className="font-bold focus:outline-none camera-button"
-            onClick={handleToggleCamera}
-            aria-label={cameraEnabled ? "Désactiver la caméra" : "Activer la caméra"}
+      {/* Colonne droite : chat, affiché ou non avec animation */}
+      <AnimatePresence>
+        {showChat && (
+          <motion.div
+            key="chat-panel"
+            initial={{ x: 400, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 400, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="h-full w-[400px] max-w-full bg-white/95 border-l-4 border-[#3a6ea5] shadow-2xl z-40 flex flex-col p-0 m-0"
           >
-            {cameraEnabled ? (
-              <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M17 10.5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4Z" stroke="#1a2a44" strokeWidth="2" strokeLinejoin="round"/></svg>
-            ) : (
-              <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M17 10.5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4ZM3 3l18 18" stroke="#1a2a44" strokeWidth="2" strokeLinejoin="round"/></svg>
-            )}
-          </button>
-          <VoiceAssistantControlBar />
-          <button
-            className="font-bold focus:outline-none mr-4"
-            onClick={() => setShowChat((v) => !v)}
-            aria-label="Ouvrir le chat"
-          >
-            💬 Chat
-          </button>
-        </div>
-      </div>
+            <div className="flex items-center justify-between p-4 border-b border-[#a6c1e4] bg-gradient-to-b from-[#e3e9f2] to-[#b7c6e2]">
+              <span className="font-bold text-blue-900 text-lg">Chat</span>
+              <button onClick={() => setShowChat(false)} className="text-blue-900 text-2xl font-bold hover:text-red-500">×</button>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              <Chat />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

@@ -37,6 +37,10 @@
   margin-left: 0.5rem;
 }
 
+.lk-participant-tile {
+  border-radius: 10px !important;
+}
+
 .lk-control-bar button, .aaa button, .lk-disconnect-button {
   background: linear-gradient(180deg, #fafdff 0%, #c3d3e7 100%);
   border: 2px outset #7a8ca7;
