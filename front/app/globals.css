@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --lk-va-bar-width: 72px;
+  --lk-control-bar-height: unset;
+}
+
+.agent-visualizer > .lk-audio-bar {
+  width: 72px;
+}
+
+.aaa {
+  @apply border-t-0 p-0 mr-4;
+}
+
+.lk-disconnect-button {
+  @apply h-[36px] hover:bg-[#6b221a] hover:text-[white] bg-[#31100c] border-[#6b221a];
+}
+
+/* --- LiveKit Control Bar Windows 7 Style --- */
+.lk-control-bar, .aaa {
+  background: linear-gradient(180deg, #e3e9f2 0%, #b7c6e2 100%);
+  border-radius: 10px;
+  border: 2px solid #7a8ca7;
+  box-shadow: 0 2px 8px #0002;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
+
+.lk-agent-control-bar{
+  padding: 0.5rem 0rem;
+}
+
+.camera-button{
+  margin-left: 0.5rem;
+}
+
+.lk-participant-tile {
+  border-radius: 10px !important;
+}
+
+.lk-control-bar button, .aaa button, .lk-disconnect-button {
+  background: linear-gradient(180deg, #fafdff 0%, #c3d3e7 100%);
+  border: 2px outset #7a8ca7;
+  border-radius: 6px;
+  color: #1a2a44;
+  font-weight: bold;
+  box-shadow: 0 1px 2px #0001;
+  transition: background 0.2s, box-shadow 0.2s;
+  padding: 0.4rem 1.2rem;
+  height: 40px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lk-disconnect-button {
+  background: linear-gradient(180deg, #ffebeb 0%, #f91f31 100%) !important;
+  border: 2px outset #b22222 !important;
+  color: #fff !important;
+}
+
+.lk-disconnect-button:hover {
+  background: linear-gradient(180deg, #f91f31 0%, #b22222 100%) !important;
+  box-shadow: 0 2px 6px #f91f3122;
+  color: #fff !important;
+}
+
+.lk-control-bar button:hover, .aaa button:hover, .lk-disconnect-button:hover {
+  background: linear-gradient(180deg, #dbeaff 0%, #a7b8d8 100%);
+  box-shadow: 0 2px 6px #0002;
+}
+
+.lk-control-bar svg, .aaa svg {
+  filter: grayscale(0.7) drop-shadow(0 1px 0 #fff);
+}
+
+.lk-device-menu, .lk-media-device-menu {
+  background: #fafdff;
+  border: 2px solid #7a8ca7;
+  border-radius: 6px;
+  color: #1a2a44;
+  font-weight: bold;
+  box-shadow: 0 2px 8px #0002;
+}
+
+.lk-device-menu::after, .lk-media-device-menu::after {
+  content: '';
+  display: inline-block;
+  margin-left: 0.5em;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #7a8ca7;
+  vertical-align: middle;
+}
+
+/* --- Fin Windows 7 LiveKit --- */
+
+.bbb {
+  padding: 0.4rem 0.3rem;
+}
+
+.two {
+  margin-bottom: 0.2rem;
+}
+
+/* --- Windows 7 Style for LiveKit Chat --- */
+.lk-chat-container, .lk-chat {
+  background: linear-gradient(180deg, #e3e9f2 0%, #b7c6e2 100%);
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lk-chat-header {
+  background: linear-gradient(180deg, #fafdff 0%, #b7c6e2 100%);
+  border-bottom: 2px solid #b7c6e2;
+  font-weight: bold;
+  width: 100%;
+  color: #1a2a44;
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 2px 8px #0001;
+  display: none;
+}
+.lk-chat-messages {
+  flex: 1 1 0%;
+  overflow-y: auto;
+  padding: 1rem 1rem 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: transparent;
+  height: 100%;
+  min-height: 0;
+}
+.lk-chat-entry {
+  background: #fafdff;
+  border: 2px solid #7a8ca7;
+  border-radius: 8px;
+  color: #1a2a44;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 1px 2px #0001;
+  font-size: 0.98rem;
+}
+
+.lk-chat-entry > .lk-message-attachements {
+  display: none !important;
+}
+
+.lk-chat-entry > .lk-message-body {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.lk-chat-entry > .lk-meta-data {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.lk-chat-input-container, .lk-chat > form {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem;
+}
+.lk-chat-input, .lk-chat > form > input {
+  border-radius: 10px !important;
+  background: linear-gradient(180deg, #fafdff 0%, #dbeeff 60%, #b7c6e2 100%) !important;
+  border: 2px outset #7a8ca7 !important;
+  color: #1a2a44 !important;
+  font-size: 1rem !important;
+  font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif !important;
+  box-shadow: inset 0 2px 8px #b7c6e2cc, 0 1px 2px #fff8;
+  padding: 0.6rem 1.2rem !important;
+  outline: none !important;
+  transition: border 0.2s, box-shadow 0.2s;
+  height: 40px !important;
+  box-sizing: border-box;
+}
+.lk-chat-input:focus, .lk-chat > form > input:focus {
+  border-color: #3a6ea5 !important;
+  box-shadow: 0 0 0 2px #b7c6e2, inset 0 2px 8px #b7c6e2cc;
+}
+.lk-chat-input:active, .lk-chat > form > input:active {
+  border-style: inset !important;
+  background: linear-gradient(180deg, #e3e9f2 0%, #b7c6e2 100%) !important;
+}
+.lk-chat-send-button, .lk-chat > form > button {
+  background: linear-gradient(180deg, #fafdff 0%, #e3e9f2 40%, #c3d3e7 80%, #b7c6e2 100%) !important;
+  border: 2px outset #7a8ca7 !important;
+  border-radius: 10px !important;
+  color: #1a2a44 !important;
+  font-weight: bold !important;
+  font-size: 1rem !important;
+  font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif !important;
+  box-shadow: 0 1px 2px #fff8, 0 2px 8px #b7c6e2cc;
+  padding: 0.4rem 1.2rem !important;
+  height: 40px !important;
+  min-width: 44px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, box-shadow 0.2s, border 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.lk-chat-send-button::before, .lk-chat > form > button::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 8px;
+  right: 8px;
+  height: 10px;
+  border-radius: 8px 8px 6px 6px;
+  background: linear-gradient(180deg, #fff8 60%, transparent 100%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.lk-chat-send-button:hover, .lk-chat > form > button:hover {
+  background: linear-gradient(180deg, #dbeaff 0%, #a7b8d8 100%) !important;
+  box-shadow: 0 2px 6px #0002, 0 1px 2px #fff8;
+}
+.lk-chat-send-button:active, .lk-chat > form > button:active {
+  border-style: inset !important;
+  background: linear-gradient(180deg, #e3e9f2 0%, #b7c6e2 100%) !important;
+}
+/* --- Fin Windows 7 Chat --- */
+
+.lk-chat > form {
+  width: 100%;
+}
+
+.lk-chat > form > input {
+  border-radius: 10px !important;
+}

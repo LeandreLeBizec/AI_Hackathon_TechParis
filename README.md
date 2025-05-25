@@ -1,4 +1,10 @@
-# 🤖 AI HR Automatic Interview Platform
+# 🤖 Meet7 - An AI HR Automatic Interview Platform with Windows 7 UI
+
+<p align="center">
+  <img src="img/home-meet7.png" alt="Demo 1" width="48%" style="display:inline-block; margin-right:1%; vertical-align:top;"/>
+  <img src="img/room-meet7.png" alt="Demo 2" width="48%" style="display:inline-block; vertical-align:top;"/>
+  <img src="img/code-editor-meet7.png" alt="Demo 2" width="48%" style="display:inline-block; vertical-align:top;"/>
+</p>
 
 > **Revolutionizing recruitment with AI-powered candidate assessment and nostalgic Windows 7 UI**
 
@@ -140,7 +146,7 @@ with open("path/to/cv.pdf", "rb") as pdf_file:
     files = {"file": ("cv.pdf", pdf_file, "application/pdf")}
     data = {"company_name": "mixedbread"}
     response = requests.post("http://localhost:8000/analyze-cv", files=files, data=data)
-    
+
 if response.status_code == 200:
     result = response.json()
     print(f"Fit Score: {result['screening_test']['fit_score']}/5")
@@ -351,10 +357,10 @@ python upload_cv.py
 cd front
 
 # Install dependencies
-npm install
+pnpm  install
 
 # Start development server
-npm run dev
+pnpm run dev
 ```
 
 ## 🏗️ Architecture

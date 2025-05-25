@@ -1,0 +1,3 @@
+| sed 's/^data:image\\/[^;]*;base64,//' | base64 -d > image.jpg
+
+https://external-preview.redd.it/r6g38aXSaQWtd1KxwJbQ-Fs5jtSVDxX3wtLHJEdqixw.jpg?auto=webp&s=fdee18de73d4f642ccc323470e044ed0f1bae7ea
