@@ -15,9 +15,11 @@ type SASProps = {
   selectedCamera: string;
   selectedMic: string;
   selectedSpeaker: string;
+  title?: string;
+  startDisplay?: string;
 };
 
-export default function SAS({ name, avatar, onJoin, selectedCamera, selectedMic, selectedSpeaker }: SASProps) {
+export default function SAS({ name, avatar, onJoin, selectedCamera, selectedMic, selectedSpeaker, title, startDisplay }: SASProps) {
   const [loading, setLoading] = useState(false);
   const [loadingDevices] = useState(false);
 
@@ -28,6 +30,8 @@ export default function SAS({ name, avatar, onJoin, selectedCamera, selectedMic,
       <div className="bg-[#f2f2f2]/95 rounded-xl border-4 border-[#a6c1e4] shadow-xl w-[400px] max-w-full p-6 text-black flex flex-col items-center">
         <Image src={`/assets/img/avatars/${avatar}`} alt="Avatar" width={64} height={64} className="w-16 h-16 rounded-lg border-2 border-white shadow mb-2" />
         <h2 className="text-xl font-bold mb-2 text-blue-900">Welcome {name} !</h2>
+        {title && <div className="text-lg font-bold text-blue-900 mb-1">{title}</div>}
+        {startDisplay && <div className="text-sm text-blue-800 mb-2">{startDisplay}</div>}
         <button
           className="w-full bg-gradient-to-br from-[#dbeeff] to-[#a6c1e4] text-blue-900 font-bold py-2 rounded shadow hover:from-[#cce4f7] hover:to-[#8eb1db] mt-2 disabled:opacity-50"
           onClick={async () => {

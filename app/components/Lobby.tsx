@@ -5,9 +5,11 @@ const AVATARS = ["avatar1.jpg", "avatar2.jpg", "avatar3.jpg", "avatar4.jpg"];
 
 type LobbyProps = {
   onJoin: (userName: string, avatar: string) => void;
+  title?: string;
+  startDisplay?: string;
 };
 
-export default function Lobby({ onJoin }: LobbyProps) {
+export default function Lobby({ onJoin, title, startDisplay }: LobbyProps) {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState<string>(AVATARS[0]);
@@ -52,7 +54,8 @@ export default function Lobby({ onJoin }: LobbyProps) {
       <main className="h-screen w-full flex flex-col justify-center items-center bg-[#3a6ea5] bg-[url('/assets/img/meet7.png')] bg-cover text-white font-sans">
         <div className="bg-[#f2f2f2] rounded-xl border-4 border-[#a6c1e4] shadow-xl w-96 p-6 text-center text-black flex flex-col items-center justify-center">
           <Image src={`/assets/img/avatars/${selectedAvatar}`} alt="Avatar" width={96} height={96} className="w-24 h-24 mx-auto rounded-lg border-2 border-white shadow mb-4" />
-          <h1 className="text-xl font-bold mb-2">Welcome to Meet 7</h1>
+          {title && <div className="text-lg font-bold text-blue-900 mb-1">{title}</div>}
+          {startDisplay && <div className="text-sm text-blue-800 mb-2">{startDisplay}</div>}
           <p className="text-gray-600 mb-4">For continue, please allow access to the microphone.</p>
           <button className="px-4 py-2 bg-blue-600 text-white rounded font-bold hover:bg-blue-700 transition mb-2" onClick={requestAudio}>Allow microphone</button>
           <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded font-bold hover:bg-gray-400 transition" onClick={() => { setAudioSkipped(true); setVideoStep(true); }}>Continue without microphone</button>
@@ -66,7 +69,9 @@ export default function Lobby({ onJoin }: LobbyProps) {
       <main className="h-screen w-full flex flex-col justify-center items-center bg-[#3a6ea5] bg-[url('/assets/img/meet7.png')] bg-cover text-white font-sans">
         <div className="bg-[#f2f2f2] rounded-xl border-4 border-[#a6c1e4] shadow-xl w-96 p-6 text-center text-black flex flex-col items-center justify-center">
           <Image src={`/assets/img/avatars/${selectedAvatar}`} alt="Avatar" width={96} height={96} className="w-24 h-24 mx-auto rounded-lg border-2 border-white shadow mb-4" />
-          <h1 className="text-xl font-bold mb-2">Caméra (optionnel)</h1>
+          {title && <div className="text-lg font-bold text-blue-900 mb-1">{title}</div>}
+          {startDisplay && <div className="text-sm text-blue-800 mb-2">Starts at : {startDisplay}</div>}
+          <h1 className="text-xl font-bold mb-2">Camera</h1>
           <p className="text-gray-600 mb-4">Allow access to the camera for video, or continue with the microphone only.</p>
           <button className="px-4 py-2 bg-blue-600 text-white rounded font-bold hover:bg-blue-700 transition mb-2" onClick={requestVideo}>Allow camera</button>
           <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded font-bold hover:bg-gray-400 transition" onClick={() => setVideoSkipped(true)}>Continue without camera</button>
@@ -79,6 +84,8 @@ export default function Lobby({ onJoin }: LobbyProps) {
     <main className="h-screen w-full flex flex-col justify-center items-center bg-[#3a6ea5] bg-[url('/assets/img/meet7.png')] bg-cover text-white font-sans">
       <div className="bg-[#f2f2f2] rounded-xl border-4 border-[#a6c1e4] shadow-xl w-96 p-6 text-center text-black">
         <Image src={`/assets/img/avatars/${selectedAvatar}`} alt="Avatar" width={96} height={96} className="w-24 h-24 mx-auto rounded-lg border-2 border-white shadow mb-2" />
+        {title && <div className="text-lg font-bold text-blue-900 mb-1">{title}</div>}
+        {startDisplay && <div className="text-sm text-blue-800 mb-2">Débute le : {startDisplay}</div>}
         <div className="mb-4">
           <div className="text-sm text-gray-700 mb-1">Choose your avatar</div>
           <div className="flex flex-wrap justify-center gap-2">
@@ -89,7 +96,6 @@ export default function Lobby({ onJoin }: LobbyProps) {
             ))}
           </div>
         </div>
-        <h1 className="text-xl font-bold mt-2">Welcome to Meet 7</h1>
         <p className="text-gray-600">Enter your name to join the meeting</p>
         <form onSubmit={handleSubmit} className="mt-4">
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter your name" className="w-full px-4 py-2 border-2 border-[#a6c1e4] rounded text-lg focus:outline-none mb-2" />

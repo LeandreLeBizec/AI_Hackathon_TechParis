@@ -101,6 +101,14 @@
 
 /* --- Fin Windows 7 LiveKit --- */
 
+.bbb {
+  padding: 0.4rem 0.3rem;
+}
+
+.two {
+  margin-bottom: 0.2rem;
+}
+
 /* --- Windows 7 Style for LiveKit Chat --- */
 .lk-chat-container, .lk-chat {
   background: linear-gradient(180deg, #e3e9f2 0%, #b7c6e2 100%);

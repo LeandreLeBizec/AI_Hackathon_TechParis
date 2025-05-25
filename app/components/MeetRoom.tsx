@@ -13,17 +13,19 @@ type MeetRoomProps = {
   selectedMic: string;
   selectedSpeaker: string;
   devices: { cameras: MediaDeviceInfo[]; mics: MediaDeviceInfo[]; speakers: MediaDeviceInfo[] };
+  title?: string;
+  startDisplay?: string;
 };
 
-export default function MeetRoom({ userName, userAvatar, token, serverUrl, reset, selectedCamera, selectedMic, selectedSpeaker }: MeetRoomProps) {
+export default function MeetRoom({ userName, userAvatar, token, serverUrl, reset, selectedCamera, selectedMic, selectedSpeaker, title, startDisplay }: MeetRoomProps) {
   return (
     <LiveKitRoom serverUrl={serverUrl} token={token} connect={true}>
-      <MeetRoomInner userName={userName} userAvatar={userAvatar} reset={reset} selectedCamera={selectedCamera} selectedMic={selectedMic} selectedSpeaker={selectedSpeaker} />
+      <MeetRoomInner userName={userName} userAvatar={userAvatar} reset={reset} selectedCamera={selectedCamera} selectedMic={selectedMic} selectedSpeaker={selectedSpeaker} title={title} startDisplay={startDisplay} />
     </LiveKitRoom>
   );
 }
 
-function MeetRoomInner({ userName, userAvatar, reset, selectedCamera, selectedMic, selectedSpeaker }: { userName: string, userAvatar: string, reset: () => void, selectedCamera: string, selectedMic: string, selectedSpeaker: string }) {
+function MeetRoomInner({ userName, userAvatar, reset, selectedCamera, selectedMic, selectedSpeaker, title, startDisplay }: { userName: string, userAvatar: string, reset: () => void, selectedCamera: string, selectedMic: string, selectedSpeaker: string, title?: string, startDisplay?: string }) {
   const room = useRoomContext();
   const [cameraEnabled, setCameraEnabled] = useState(true);
   const [showChat, setShowChat] = useState(false);
@@ -79,17 +81,31 @@ function MeetRoomInner({ userName, userAvatar, reset, selectedCamera, selectedMi
             <MeetGrid userAvatar={userAvatar} userName={userName} />
             <RoomAudioRenderer />
           </div>
+
         </div>
         {/* Barre de contrôle en bas, hauteur fixe avec animation */}
         <motion.div
-          style={{ height: CONTROL_BAR_HEIGHT }}
-          className="w-full flex-shrink-0 flex justify-center items-center"
+          style={{ height: CONTROL_BAR_HEIGHT, position: 'relative' }}
+          className="w-full flex-shrink-0 flex items-center px-4"
           animate={{
-            x: showChat ? 0 : 0 // On pourrait ajuster si besoin, mais la barre reste centrée
+            x: showChat ? 0 : 0
           }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
-          <div className="aaa flex items-center gap-3 justify-center">
+          {/* Infos réunion collées à gauche */}
+          {(title || startDisplay) && (
+            <div className="one aaa bbb flex items-center gap-3 justify-start min-w-0" style={{ flex: '0 1 auto' }}>
+              <div className="flex flex-col items-start">
+                {title && <div className="font-bold text-base truncate max-w-full text-blue-900" title={title}>{title}</div>}
+                {startDisplay && <div className="text-sm text-blue-800">{startDisplay}</div>}
+              </div>
+            </div>
+          )}
+          {/* Barre d'activité centrée horizontalement */}
+          <div
+            className="two aaa flex items-center gap-3 justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ transform: 'translate(-50%, -50%)' }}
+          >
             <button
               className="font-bold focus:outline-none camera-button"
               onClick={handleToggleCamera}
